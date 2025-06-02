@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Child Window</title>
-</head>
-<body>
-    <button onclick="modifyParentContent()">newModify Parent Content</button>
-    <div id="valueDisplay">Initial Value</div>
+    <title>Open and Monitor Window</title>
     <script>
-        function modifyParentContent() {
-            console.log("libing hhhhhhhhhhhhhhhhhhhhhhh start");
-            const valueDisplay = document.getElementById('valueDisplay');
-            if (window.opener) {
-                valueDisplay.textContent = "hhhhhhhhhhhhhhhhhhhhhhhhhhhnotempty";
-                console.log("libing hhhhhhhhhhhhhhhhhhhhhhh not empty");
-                window.opener.document.getElementById('message').innerText = 'Hello from Child Window';
-            } else {
-                valueDisplay.textContent = "eeeeeeeeeeeeeeeeeeeeeeeeeeeee     empty";
-                console.log("libing hhhhhhhhhhhhhhhhhhhhhhhempty");
-                window.alert('This window was not opened by another window.');
-            }
+        function openAndMonitorWindow() {
+            // 打开新窗口
+            const url = "https://cross-origin-isolation.glitch.me/coop?coop=same-origin&";
+            const newWindow = window.open(url);
+
+            // 设置一个标志位，用于判断是否成功获取内容
+            let contentRetrieved = false;
+
+            // 监听新窗口的加载完成事件
+            newWindow.onload = function () {
+                try {
+                    // 尝试获取新窗口的网页内容
+                    const content = newWindow.document.body.innerHTML;
+                    // 如果获取成功，将内容显示在当前页面
+                    document.getElementById("contentDisplay").innerText = content;
+                    contentRetrieved = true;
+                } catch (e) {
+                    // 如果获取失败，显示获取失败的提示信息
+                    document.getElementById("contentDisplay").innerText = "获取失败";
+                }
+            };
+
+            // 设置一个定时器，在一定时间后检查是否成功获取内容
+            setTimeout(function () {
+                if (!contentRetrieved) {
+                    document.getElementById("contentDisplay").innerText = "获取失败";
+                }
+            }, 5000); // 5秒后检查
         }
     </script>
+</head>
+<body>
+    <h1>Open and Monitor Window</h1>
+    <button onclick="openAndMonitorWindow()">Open Window</button>
+    <div id="contentDisplay" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
+        点击按钮打开窗口并获取内容
+    </div>
 </body>
 </html>
