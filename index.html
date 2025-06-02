@@ -13,7 +13,9 @@
             setTimeout(function () {
                 document.getElementById("content").innerText = "新页面加载完成";
                     // 尝试获取新窗口的网页内容
+                document.getElementById("contentDisplay").innerText = "获取新页面内容中";
                     const content = newWindow.document.body.innerHTML;
+                document.getElementById("contentDisplay").innerText = " ";
                     // 如果获取成功，将内容显示在当前页面
                     document.getElementById("contentDisplay").innerText = content;
             }, 3000)
