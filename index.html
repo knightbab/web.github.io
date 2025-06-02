@@ -10,16 +10,13 @@
             const url = "https://www.baidu.com/";
             const newWindow = window.open(url);
             document.getElementById("content").innerText = "新页面加载中";
-
-            // 监听新窗口的加载完成事件
-            newWindow.onload = function () {
+            setTimeout(function () {
                 document.getElementById("content").innerText = "新页面加载完成";
                     // 尝试获取新窗口的网页内容
                     const content = newWindow.document.body.innerHTML;
                     // 如果获取成功，将内容显示在当前页面
                     document.getElementById("contentDisplay").innerText = content;
-
-            };
+            }, 3000)
         }
     </script>
 </head>
