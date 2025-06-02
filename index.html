@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Window</title>
+</head>
 <body>
-	<button onclick="useOpenerMethod()">使用父页面的方法</button>
-	<button onclick="changeOpener()">盗换父页面</button>
+    <button onclick="modifyParentContent()">Modify Parent Content</button>
+    <script>
+        function modifyParentContent() {
+            if (window.opener) {
+                window.opener.document.getElementById('message').innerText = 'Hello from Child Window';
+            } else {
+                alert('This window was not opened by another window.');
+            }
+        }
+    </script>
 </body>
-<script>
-function useOpenerMethod(){
-	window.opener.test(1234);
-	
-}
-function changeOpener(){
-	window.opener.location.href="https://www.baidu.com"
-}
-</script>
 </html>
