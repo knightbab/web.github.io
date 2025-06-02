@@ -9,6 +9,7 @@
     <button onclick="modifyParentContent()">newModify Parent Content</button>
     <script>
         function modifyParentContent() {
+            console.log("libing hhhhhhhhhhhhhhhhhhhhhhh start");
             if (window.opener) {
                 console.log("libing hhhhhhhhhhhhhhhhhhhhhhh not empty");
                 window.opener.document.getElementById('message').innerText = 'Hello from Child Window';
