@@ -9,6 +9,7 @@
             // 打开新窗口
             const url = "https://www.baidu.com/";
             const newWindow = window.open(url);
+            document.getElementById("content").innerText = "新页面加载中";
 
             // 监听新窗口的加载完成事件
             newWindow.onload = function () {
