@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<script>
-	function test(n) {
-		console.log(n)
-	}
-</script>
 <body>
-	<button onclick="javascript:window.open('http://192.168.137.1:3001')">跳到子页面</button>
+	<button onclick="useOpenerMethod()">使用父页面的方法</button>
+	<button onclick="changeOpener()">盗换父页面</button>
 </body>
+<script>
+function useOpenerMethod(){
+	window.opener.test(1234);
+	
+}
+function changeOpener(){
+	window.opener.location.href="https://www.baidu.com"
+}
+</script>
 </html>
