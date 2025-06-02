@@ -6,12 +6,14 @@
     <title>Child Window</title>
 </head>
 <body>
-    <button onclick="modifyParentContent()">Modify Parent Content</button>
+    <button onclick="modifyParentContent()">newModify Parent Content</button>
     <script>
         function modifyParentContent() {
             if (window.opener) {
+                console.log("libing hhhhhhhhhhhhhhhhhhhhhhh not empty");
                 window.opener.document.getElementById('message').innerText = 'Hello from Child Window';
             } else {
+                console.log("libing hhhhhhhhhhhhhhhhhhhhhhhempty");
                 window.alert('This window was not opened by another window.');
             }
         }
