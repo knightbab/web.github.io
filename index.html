@@ -12,7 +12,7 @@
             if (window.opener) {
                 window.opener.document.getElementById('message').innerText = 'Hello from Child Window';
             } else {
-                alert('This window was not opened by another window.');
+                window.alert('This window was not opened by another window.');
             }
         }
     </script>
