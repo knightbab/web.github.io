@@ -7,13 +7,17 @@
 </head>
 <body>
     <button onclick="modifyParentContent()">newModify Parent Content</button>
+    <div id="valueDisplay">Initial Value</div>
     <script>
         function modifyParentContent() {
             console.log("libing hhhhhhhhhhhhhhhhhhhhhhh start");
+            const valueDisplay = document.getElementById('valueDisplay');
             if (window.opener) {
+                valueDisplay.textContent = "hhhhhhhhhhhhhhhhhhhhhhhhhhhnotempty";
                 console.log("libing hhhhhhhhhhhhhhhhhhhhhhh not empty");
                 window.opener.document.getElementById('message').innerText = 'Hello from Child Window';
             } else {
+                valueDisplay.textContent = "eeeeeeeeeeeeeeeeeeeeeeeeeeeee     empty";
                 console.log("libing hhhhhhhhhhhhhhhhhhhhhhhempty");
                 window.alert('This window was not opened by another window.');
             }
