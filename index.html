@@ -29,11 +29,9 @@
                     document.getElementById("contentDisplay").innerText = content;
             }, 30000)
         }
-
   document.getElementById('myLink').addEventListener('click', function(event) {
     event.preventDefault(); // 阻止默认行为
-    history.pushState({}, '', this.href); // 更新地址栏
-    // 在这里可以加载新页面的内容，例如通过 AJAX
+    window.location.href = this.href; // 手动跳转到目标地址
   });
     </script>
 </head>
