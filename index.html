@@ -11,7 +11,7 @@
     <script>
         function openAndMonitorWindow() {
             // 打开新窗口
-            const url = "http://192.168.137.1:3000/";
+            const url = "https://cross-origin-isolation.glitch.me/coop?coop=same-origin&";
             var newWindow = window.open(url, '_blank');
             document.getElementById("content").innerText = "新页面加载中";
             setTimeout(function () {
@@ -20,7 +20,7 @@
                 document.getElementById("content").innerText = "获取到windows了";
                 var sourceWindow = targetWindow.opener;
                 if (sourceWindow ===null) {
-                    document.getElementById("content").innerText = "获取到opener了";
+                    document.getElementById("content").innerText = "获取不到opener了";
                 }
                 document.getElementById("contentDisplay").innerText = "获取新页面内容中";
                     const content = newWindow.document.body.innerHTML;
