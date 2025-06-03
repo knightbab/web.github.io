@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open and Monitor Window</title>
     <a href = "http://192.168.137.1:3002/">打开新窗口</a> </br>
-    <a href = "https://www.baidu.com/">打开百度</a> </br>
+    <a href = "https://www.baidu.com/" id="myLink">打开百度</a> </br>
     <a href = "https://cross-origin-isolation.glitch.me/coop?coop=same-origin&">打开sameorigin</a> </br>
     <a href = "https://cross-origin-isolation.glitch.me/coop?coop=unsafe-none&">打开unsafe-none</a> </br>
     <script>
@@ -29,6 +29,12 @@
                     document.getElementById("contentDisplay").innerText = content;
             }, 30000)
         }
+
+  document.getElementById('myLink').addEventListener('click', function(event) {
+    event.preventDefault(); // 阻止默认行为
+    history.pushState({}, '', this.href); // 更新地址栏
+    // 在这里可以加载新页面的内容，例如通过 AJAX
+  });
     </script>
 </head>
 <body>
