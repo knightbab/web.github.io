@@ -12,9 +12,16 @@
         function openAndMonitorWindow() {
             // 打开新窗口
             const url = "https://third-party-test.glitch.me/popup?coop=same-origin&";
-            const newWindow = window.open(url);
+            var newWindow = window.open(url, '_blank');
             document.getElementById("content").innerText = "新页面加载中";
             setTimeout(function () {
+                document.getElementById("content").innerText = "开始获取opener";
+                var targetWindow = newWindow.window;
+                document.getElementById("content").innerText = "获取到windows了";
+                var sourceWindow = targetWindow.opener;
+                if (sourceWindow) {
+                    document.getElementById("content").innerText = "获取到opener了";
+                }
                 document.getElementById("content").innerText = "新页面加载完成";
                     // 尝试获取新窗口的网页内容
                 document.getElementById("contentDisplay").innerText = "获取新页面内容中";
