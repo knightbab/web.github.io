@@ -19,7 +19,7 @@
                 var targetWindow = newWindow.window;
                 document.getElementById("content").innerText = "获取到windows了";
                 var sourceWindow = targetWindow.opener;
-                if (sourceWindow) {
+                if (sourceWindow ===null) {
                     document.getElementById("content").innerText = "获取到opener了";
                 }
                 document.getElementById("contentDisplay").innerText = "获取新页面内容中";
