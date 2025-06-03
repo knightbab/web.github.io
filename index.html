@@ -8,7 +8,7 @@
     <script>
         function openAndMonitorWindow() {
             // 打开新窗口
-            const url = "https://cross-origin-isolation.glitch.me/coop?coop=unsafe-none&";
+            const url = "https://third-party-test.glitch.me/popup?coop=same-origin&";
             const newWindow = window.open(url);
             document.getElementById("content").innerText = "新页面加载中";
             setTimeout(function () {
