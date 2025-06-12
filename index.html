@@ -5,26 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open and Monitor Window</title></br></br>
     <script>
-        function openAndMonitorWindow() {
-            // 打开新窗口
-            const url = "https://cross-origin-isolation.glitch.me/coop?coop=same-origin&";
-            var newWindow = window.open(url, '_blank');
-            document.getElementById("content").innerText = "新页面加载中";
-            setTimeout(function () {
-                document.getElementById("content").innerText = "开始获取opener";
-                var targetWindow = newWindow.window;
-                document.getElementById("content").innerText = "获取到windows了";
-                var sourceWindow = targetWindow.opener;
-                if (sourceWindow ===null) {
-                    document.getElementById("content").innerText = "获取不到opener了";
-                }
-                document.getElementById("contentDisplay").innerText = "获取新页面内容中";
-                    const content = newWindow.document.body.innerHTML;
-                document.getElementById("contentDisplay").innerText = " ";
-                    // 如果获取成功，将内容显示在当前页面
-                    document.getElementById("contentDisplay").innerText = content;
-            }, 30000)
-        }
   document.getElementById('myLink').addEventListener('click', function(event) {
     event.preventDefault(); // 阻止默认行为
     window.location.href = this.href; // 手动跳转到目标地址
@@ -49,8 +29,8 @@
         页面加载结果
     </div>
     <a href = "http://192.168.137.1:3002/" target="_self">打开新窗口</a> </br>
-    <a href = "https://www.baidu.com/" id="myLink" target="_self">打开百度</a> </br>
-    <a href = "https://cross-origin-isolation.glitch.me/coop?coep=require-corp&coop=same-origin&corp=same-origin&" target="_self">打开sameorigin111</a> </br>
+    <a href = "https://www.baidu.com/"  target="_self">打开百度</a> </br>
+    <a href = "https://cross-origin-isolation.glitch.me/coop?coep=require-corp&coop=same-origin&corp=same-origin&" id="myLink" target="_self">打开sameorigin111</a> </br>
     <a href = "https://cross-origin-isolation.glitch.me/coop?coop=unsafe-none&" target="_self">打开unsafe-none</a> </br>
     
     <a href = "https://www.toutiao.com/article/7514615086028210725/?log_from=1b2bde6cdb868_1749634360483" target="_self">打开头条文章</a> </br>
