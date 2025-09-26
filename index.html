@@ -1,38 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open and Monitor Window</title></br></br>
-    <style>
-        /* 通过CSS选择器选择a标签并设置字体大小 */
-        a {
-            font-size: 24px; /* 将字体大小设置为24像素 */
-            color: blue; /* 顺便设置字体颜色为蓝色 */
-            text-decoration: none; /* 去掉下划线 */
+    <title>Resume事件监听</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        neutral: '#6B7280',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .event-box {
+                @apply border-2 border-gray-200 rounded-lg p-6 transition-all duration-300;
+            }
+            .event-box-active {
+                @apply border-primary bg-blue-50 shadow-lg;
+            }
         }
     </style>
 </head>
-<body>
-    <h1>Open and Monitor Window</h1>
-    <button onclick="openAndMonitorWindow()">Open Window</button>
-    <div id="contentDisplay" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
-        点击按钮打开窗口并获取内容
-    </div>
-    <div id="content" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
-        页面加载结果
-    </div>
-    <a href = "http://192.168.137.1:3002/" target="_self">打开新窗口</a> </br>
-    <a href = "https://www.baidu.com/"  target="_self">打开百度</a> </br>
-    <a href = "https://chrome.dev/f/cross-origin-isolation//coop?coep=require-corp&coop=same-origin&corp=same-site&" >打开sameorigin111</a> </br>
-    <a href = "https://third-party-domain.appspot.com/cross-origin-isolation//popup?coop=same-origin&">打开unsafe-none</a> </br>
-    <a href = "
-https://www.google-analytics.com/g/collect?v=2&tid=G-QEHZPBE5HH&gtm=45je5690v899781863za200&_p=1749634360890&gcd=13l3l3l3l1l1&npa=0&dma=0&tag_exp=101509157~103116026~103200004~103233427~103351869~103351871~104617979~104617981~104661466~104661468&cid=1404654581.1748078634&ul=zh-cn&sr=2560x1440&uaa=x86&uab=64&uafvl=Chromium%3B128.0.6613.138%7CNot%253BA%253DBrand%3B24.0.0.0%7CMicrosoft%2520Edge%3B128.0.2739.79&uamb=0&uam=&uap=Windows&uapv=15.0.0&uaw=0&are=1&frm=0&pscdl=noapi&_eu=AAAAAAQ&_s=1&sid=1749634326&sct=4&seg=1&dl=https%3A%2F%2Fwww.toutiao.com%2Farticle%2F7514615086028210725%2F%3Flog_from%3D1b2bde6cdb868_1749634360483&dr=https%3A%2F%2Fwww.toutiao.com%2Farticle%2F7514519672725848586%2F%3Flog_from%3Da5bef3dab7d0f_1749634354878&dt=%E6%99%AE%E6%B3%95%E6%8A%A4%E8%88%AA%E6%88%90%E9%95%BF%E8%B7%AF%20%E5%85%B1%E7%AD%91%E9%98%B3%E5%85%89%E5%AE%89%E5%85%A8%E6%A0%A1%E5%9B%AD%E2%80%94%E2%80%94%E6%95%A6%E5%8C%96%E5%B8%82%E5%8F%B8%E6%B3%95%E5%B1%80%E5%BC%80%E5%B1%95%E2%80%9C%E6%A0%A1%E5%9B%AD%E9%9B%B6%E9%9C%B8%E5%87%8C%20%E9%9D%92%E6%98%A5%E6%9B%B4%E9%98%B3%E5%85%89%E2%80%9D%E6%B3%95%E6%B2%BB%E8%AE%B2%E5%BA%A7%20-%20%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1&en=page_view&_ee=1&tfd=5466">打开头条的链接</a></br>
-    
-    <a href = "https://www.toutiao.com/article/7514615086028210725/?log_from=1b2bde6cdb868_1749634360483" target="_self">打开头条文章</a> </br>
-    <a href = "https://pd.qq.com/publish?mode=1&utm_source=ingame&guildId=68788311635412175&subc=1265334&type=pic&pic1=aHR0cDovL3ZpZGVvc2hhcmUucXNtLnFxLmNvbS8vZGF0YS9zdG9yYWdlL2VsMi9iYXNlL2hhcHMvZW50cnkvZmlsZXMvLy9DYXB0dXJlU2NyZWVuLzA2XzE2XzIwMjVfMTZfMTVfMTRfNS5wbmc=&text=">跳转到QQ飞车分享</a></br>
-    <a href = "https://fonts.googleapis.cn/css2?family=Material+Icons&family=Material+Symbols+Outlined&display=block">打开googleapis</a> </br>
-    <a href = "https://www.gstatic.cn/devrel-devsite/prod/v46d043083f27fa7361aea8506dabbd161e0b84f5a7c6df8d5e3cfad447dd4376/web/css/app.css">打开gstatic</a> </br>
+<body class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 font-sans">
+<div class="max-w-md w-full bg-white rounded-xl shadow-md p-8">
+    <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center text-gray-800 mb-6">
+        <i class="fa fa-refresh text-primary mr-2"></i>Resume事件监听
+    </h1>
 
+    <div class="event-box mb-6" id="eventStatus">
+        <p class="text-neutral text-center">等待resume事件触发...</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
+        <p class="mb-2"><i class="fa fa-info-circle text-primary mr-1"></i> 页面仅监听resume事件</p>
+        <p><i class="fa fa-lightbulb-o text-yellow-500 mr-1"></i> 在移动设备上，当应用从后台返回前台时可能会触发此事件</p>
+    </div>
+
+    <div class="mt-6 text-center text-sm text-gray-500">
+        <p>事件触发次数: <span id="eventCount" class="font-semibold text-primary">0</span></p>
+    </div>
+</div>
+
+<script>
+    // 获取DOM元素
+    const eventStatus = document.getElementById('eventStatus');
+    const eventCount = document.getElementById('eventCount');
+    let count = 0;
+
+    // 仅监听resume事件，不处理其他可见性相关事件
+    document.addEventListener('resume', function() {
+        // 更新计数
+        count++;
+        eventCount.textContent = count;
+
+        // 更新状态显示
+        eventStatus.innerHTML = `
+            <div class="flex items-center justify-center mb-2">
+                <i class="fa fa-check-circle text-secondary text-xl mr-2"></i>
+                <p class="font-medium text-secondary">resume事件已触发</p>
+            </div>
+            <p class="text-sm text-gray-500 text-center">
+                触发时间: ${new Date().toLocaleTimeString()}
+            </p>
+        `;
+
+        // 添加动画效果
+        eventStatus.classList.add('event-box-active');
+
+        // 3秒后恢复默认样式
+        setTimeout(() => {
+            eventStatus.classList.remove('event-box-active');
+        }, 3000);
+    });
+</script>
 </body>
 </html>
