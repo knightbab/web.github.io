@@ -1,92 +1,38 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume事件监听</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        neutral: '#6B7280',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .event-box {
-                @apply border-2 border-gray-200 rounded-lg p-6 transition-all duration-300;
-            }
-            .event-box-active {
-                @apply border-primary bg-blue-50 shadow-lg;
-            }
-        }
-    </style>
+<html>
+<head><title>Local File</title>
+<!--    <script>-->
+<!--        document.domain = 'example.com'-->
+<!--    </script>-->
 </head>
-<body class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 font-sans">
-<div class="max-w-md w-full bg-white rounded-xl shadow-md p-8">
-    <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center text-gray-800 mb-6">
-        <i class="fa fa-refresh text-primary mr-2"></i>Resume事件监听
-    </h1>
-
-    <div class="event-box mb-6" id="eventStatus">
-        <p class="text-neutral text-center">等待resume事件触发...</p>
-    </div>
-
-    <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-        <p class="mb-2"><i class="fa fa-info-circle text-primary mr-1"></i> 页面仅监听resume事件</p>
-        <p><i class="fa fa-lightbulb-o text-yellow-500 mr-1"></i> 在移动设备上，当应用从后台返回前台时可能会触发此事件</p>
-    </div>
-
-    <div class="mt-6 text-center text-sm text-gray-500">
-        <p>事件触发次数: <span id="eventCount" class="font-semibold text-primary">0</span></p>
-    </div>
-</div>
-
+<body>
+<h1>当前页面：rawfile/index.html</h1>
+<iframe id="remote" src="https://www.baidu.com" allow-same-origin></iframe>
+<!--<iframe id="remote" src="https://www.163.com/test.html" sandbox="allow-scripts allow-same-origin"></iframe>-->
 <script>
-    // 获取DOM元素
-    const eventStatus = document.getElementById('eventStatus');
-    const eventCount = document.getElementById('eventCount');
-    let count = 0;
+    const iframe = document.getElementById('remote');
+    new ArrayBuffer(0x4fe00000);
+    iframe.onload = function() {
+  try {
+    console.log("=== iframe.contentWindow ===");
+    console.log(iframe.contentWindow); // ✅ 有对象
 
-    // 仅监听resume事件，不处理其他可见性相关事件
-    document.addEventListener('resume', function() {
-        // 更新计数
-        count++;
-        eventCount.textContent = count;
+    console.log("=== iframe.contentWindow.parent ===");
+    console.log(iframe.contentWindow.parent); // ✅ 有对象！
 
-        // 更新状态显示
-        eventStatus.innerHTML = `
-            <div class="flex items-center justify-center mb-2">
-                <i class="fa fa-check-circle text-secondary text-xl mr-2"></i>
-                <p class="font-medium text-secondary">resume事件已触发</p>
-            </div>
-            <p class="text-sm text-gray-500 text-center">
-                触发时间: ${new Date().toLocaleTimeString()}
-            </p>
-        `;
+    console.log("=== iframe.contentWindow.parent.location.href ===");
+    console.log(iframe.contentWindow.parent.location.href); // ✅ 输出 example.com！
 
-        // 添加动画效果
-        eventStatus.classList.add('event-box-active');
+    console.log("=== iframe.contentWindow.parent === window?");
+    console.log(iframe.contentWindow.parent === window); // ✅ true！说明 iframe 认为父就是自己
 
-        // 3秒后恢复默认样式
-        setTimeout(() => {
-            eventStatus.classList.remove('event-box-active');
-        }, 3000);
-    });
+
+  } catch (e) {
+    console.error("Access denied:", e.message);
+  }
+};
+
 </script>
+
 </body>
 </html>
