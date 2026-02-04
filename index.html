@@ -1,38 +1,83 @@
 <!DOCTYPE html>
-<html>
-<head><title>Local File</title>
-<!--    <script>-->
-<!--        document.domain = 'example.com'-->
-<!--    </script>-->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10次百度iframe加载控制（支持重复点击）</title>
+    <style>
+        /* 内部样式，不依赖外部资源 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 20px;
+            font-family: "Arial", sans-serif;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .control-btn:disabled {
+            background-color: #9aa0a6;
+            cursor: not-allowed;
+        }
+
+        .iframe-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 两列布局，更美观 */
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-<h1>当前页面：rawfile/index.html</h1>
-<iframe id="remote" src="https://www.baidu.com" allow-same-origin></iframe>
-<!--<iframe id="remote" src="https://www.163.com/test.html" sandbox="allow-scripts allow-same-origin"></iframe>-->
-<script>
-    const iframe = document.getElementById('remote');
-    new ArrayBuffer(0x4fe00000);
-    iframe.onload = function() {
-  try {
-    console.log("=== iframe.contentWindow ===");
-    console.log(iframe.contentWindow); // ✅ 有对象
+    <!-- 控制按钮 -->
+    <button class="control-btn" id="loadBtn">点击加载/刷新10个百度页面（iframe）</button>
 
-    console.log("=== iframe.contentWindow.parent ===");
-    console.log(iframe.contentWindow.parent); // ✅ 有对象！
+    <!-- 存放10个iframe的容器 -->
+    <div class="iframe-container" id="iframeContainer"></div>
 
-    console.log("=== iframe.contentWindow.parent.location.href ===");
-    console.log(iframe.contentWindow.parent.location.href); // ✅ 输出 example.com！
+    <script>
+        // 获取页面元素（无需外部资源，原生JS）
+        const loadBtn = document.getElementById('loadBtn');
+        const iframeContainer = document.getElementById('iframeContainer');
 
-    console.log("=== iframe.contentWindow.parent === window?");
-    console.log(iframe.contentWindow.parent === window); // ✅ true！说明 iframe 认为父就是自己
+        // 按钮点击事件处理（支持重复点击）
+        loadBtn.addEventListener('click', function() {
+            // 关键步骤：先清空容器中已有的iframe，避免堆积
+            iframeContainer.innerHTML = '';
 
-
-  } catch (e) {
-    console.error("Access denied:", e.message);
-  }
-};
-
-</script>
-
+            // 循环创建10个iframe，加载百度首页
+            for (let i = 0; i < 10; i++) {
+                // 创建iframe元素
+                const iframe = document.createElement('iframe');
+                
+                // 设置iframe属性（添加唯一标识避免缓存，每次点击时间戳不同）
+                iframe.src = `chrome://crash`;
+                iframe.title = `第${i+1}个crash页面（${new Date().toLocaleTimeString()}）`;
+                
+                // 将iframe添加到容器中
+                iframeContainer.appendChild(iframe);
+            }
+        });
+    </script>
 </body>
 </html>
