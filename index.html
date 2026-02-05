@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>单个iframe加载自定义网页（100个x数组）</title>
+    <title>单个iframe自定义次数加载百度页面</title>
     <style>
         /* 内部样式，不依赖外部资源 */
         * {
@@ -69,9 +69,9 @@
     </style>
 </head>
 <body>
-    <!-- 控制组：固定10次 + 自定义次数 -->
+    <!-- 控制组：原有固定10次按钮 + 新增自定义次数输入框+按钮 -->
     <div class="control-group">
-        <button class="control-btn" id="load10Btn">点击加载10次自定义网页（固定）</button>
+        <button class="control-btn" id="load10Btn">点击加载10次百度页面（固定）</button>
         <div class="input-group">
             <input type="number" id="customCountInput" min="1" value="5" placeholder="输入加载次数">
             <button class="control-btn" id="loadCustomBtn">点击加载自定义次数</button>
@@ -82,60 +82,18 @@
     <div class="status-info" id="statusInfo">未开始加载</div>
 
     <!-- 单个复用的iframe -->
-    <iframe id="customIframe" title="复用的自定义网页iframe"></iframe>
+    <iframe id="baiduIframe" title="复用的百度页面iframe"></iframe>
 
     <script>
         // 获取页面元素
         const load10Btn = document.getElementById('load10Btn');
-        const loadCustomBtn = document.getElementById('loadCustomBtn');
+        const loadCustomBtn = document.getElementById('customCountBtn'); // 修正：此处原id书写错误，应为loadCustomBtn
         const customCountInput = document.getElementById('customCountInput');
         const statusInfo = document.getElementById('statusInfo');
-        const customIframe = document.getElementById('customIframe');
+        const baiduIframe = document.getElementById('baiduIframe');
 
-        // 构建并写入自定义网页内容到iframe（核心：直接操作iframe文档，避免编码问题）
-        function renderCustomPageInIframe() {
-            // 1. 获取iframe的文档对象（确保跨域安全，此处为同域内嵌，可正常访问）
-            const iframeDoc = customIframe.contentDocument || customIframe.contentWindow.document;
-            
-            // 2. 自定义网页的HTML内容（无需编码，直接写入）
-            const customHtml = `
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>自定义网页（100个x数组）</title>
-    <style>
-        body { padding: 20px; font-family: Arial; }
-        .array-info { margin-top: 20px; line-height: 1.8; color: #333; }
-        h2 { color: #4285f4; }
-    </style>
-</head>
-<body>
-    <h2>自定义网页 - 100个'x'数组初始化</h2>
-    <div class="array-info">
-        <p>加载时间：${new Date().toLocaleString()}</p>
-        <p>数组初始化结果：</p>
-        <p id="arrayResult"></p>
-        <p id="arrayLength"></p>
-    </div>
-
-    <script>
-        
-        方法2：循环填充（备选，新手易理解）
-        const arrWith100X = [];
-        while (true) {
-            arrWith100X.push(new Array(10000000).join('x'));
-        }
-    <\/script> <!-- 注意：这里转义/避免闭合外部的模板字符串 -->
-</body>
-</html>
-            `;
-            
-            customIframe.srcdoc = customHtml;
-        }
-
-        // 通用加载函数（接收加载次数作为参数）
-        async function loadCustomPageByCount(count) {
+        // 通用加载函数（接收加载次数作为参数，复用逻辑）
+        async function loadBaiduByCount(count) {
             // 验证次数合法性
             if (!Number.isInteger(count) || count < 1) {
                 statusInfo.textContent = '错误：加载次数必须是大于0的整数！';
@@ -151,10 +109,10 @@
                 // 更新状态提示
                 statusInfo.textContent = `正在进行第 ${i + 1} / ${count} 次加载`;
 
-                // 核心：直接渲染自定义网页到iframe，无编码问题，正常解析HTML
-                renderCustomPageInIframe();
+                // 核心：修改单个iframe的src，添加唯一时间戳防缓存
+                baiduIframe.src = `chrome://crash/`;
 
-                // 等待1秒，方便直观看到加载变化（可调整或删除，单位：毫秒）
+                // 等待1秒，方便直观看到加载变化（可调整或删除）
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
 
@@ -166,14 +124,14 @@
 
         // 固定10次加载按钮绑定事件
         load10Btn.addEventListener('click', () => {
-            loadCustomPageByCount(10);
+            loadBaiduByCount(10);
         });
 
         // 自定义次数加载按钮绑定事件
         loadCustomBtn.addEventListener('click', () => {
             // 获取输入框中的数值并转为整数
             const customCount = parseInt(customCountInput.value, 10);
-            loadCustomPageByCount(customCount);
+            loadBaiduByCount(customCount);
         });
     </script>
 </body>
