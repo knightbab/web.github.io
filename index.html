@@ -135,10 +135,7 @@
 </html>
             `;
             
-            // 3. 清空iframe原有内容，写入新的HTML并解析
-            iframeDoc.open();
-            iframeDoc.write(customHtml);
-            iframeDoc.close(); // 关闭文档流，触发HTML解析和渲染
+            customIframe.srcdoc = customHtml;
         }
 
         // 通用加载函数（接收加载次数作为参数）
