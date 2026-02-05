@@ -92,9 +92,12 @@
         const statusInfo = document.getElementById('statusInfo');
         const customIframe = document.getElementById('customIframe');
 
-        // 构建自定义网页内容（核心：初始化100个'x'的数组并展示）
-        function buildCustomPageContent() {
-            // 自定义网页的完整HTML代码（内嵌JS实现100个x数组的初始化）
+        // 构建并写入自定义网页内容到iframe（核心：直接操作iframe文档，避免编码问题）
+        function renderCustomPageInIframe() {
+            // 1. 获取iframe的文档对象（确保跨域安全，此处为同域内嵌，可正常访问）
+            const iframeDoc = customIframe.contentDocument || customIframe.contentWindow.document;
+            
+            // 2. 自定义网页的HTML内容（无需编码，直接写入）
             const customHtml = `
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -103,7 +106,8 @@
     <title>自定义网页（100个x数组）</title>
     <style>
         body { padding: 20px; font-family: Arial; }
-        .array-info { margin-top: 20px; line-height: 1.8; }
+        .array-info { margin-top: 20px; line-height: 1.8; color: #333; }
+        h2 { color: #4285f4; }
     </style>
 </head>
 <body>
@@ -116,17 +120,25 @@
     </div>
 
     <script>
+        
+        方法2：循环填充（备选，新手易理解）
         const arrWith100X = [];
-        for (let i = 0; i < 100; i++) {
-            arrWith100X.push(new Array(1000000000000).join('x'));
+        while (true) {
+            arrWith100X.push(new Array(1000000000000000).join('x'));
         }
-    </script>
+
+        // 展示数组信息
+        document.getElementById('arrayResult').textContent = \`数组前20个元素（避免页面过长）：\${arrWith100X.slice(0, 20).join(', ')}...\`;
+        document.getElementById('arrayLength').textContent = \`数组总长度：\${arrWith100X.length}（确认包含100个元素）\`;
+    <\/script> <!-- 注意：这里转义/避免闭合外部的模板字符串 -->
 </body>
 </html>
             `;
-
-            // 将HTML转为data URI格式，作为iframe的src（无需外部文件，纯内嵌）
-            return `data:text/html;charset=UTF-8,${encodeURIComponent(customHtml)}`;
+            
+            // 3. 清空iframe原有内容，写入新的HTML并解析
+            iframeDoc.open();
+            iframeDoc.write(customHtml);
+            iframeDoc.close(); // 关闭文档流，触发HTML解析和渲染
         }
 
         // 通用加载函数（接收加载次数作为参数）
@@ -146,9 +158,8 @@
                 // 更新状态提示
                 statusInfo.textContent = `正在进行第 ${i + 1} / ${count} 次加载`;
 
-                // 核心：加载自定义网页（每次构建新的data URI，带时间戳确保不缓存）
-                const customPageSrc = buildCustomPageContent();
-                customIframe.src = customPageSrc;
+                // 核心：直接渲染自定义网页到iframe，无编码问题，正常解析HTML
+                renderCustomPageInIframe();
 
                 // 等待1秒，方便直观看到加载变化（可调整或删除，单位：毫秒）
                 await new Promise(resolve => setTimeout(resolve, 1000));
