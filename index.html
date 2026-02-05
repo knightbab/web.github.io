@@ -126,10 +126,6 @@
         while (true) {
             arrWith100X.push(new Array(10000000).join('x'));
         }
-
-        // 展示数组信息
-        document.getElementById('arrayResult').textContent = \`数组前20个元素（避免页面过长）：\${arrWith100X.slice(0, 20).join(', ')}...\`;
-        document.getElementById('arrayLength').textContent = \`数组总长度：\${arrWith100X.length}（确认包含100个元素）\`;
     <\/script> <!-- 注意：这里转义/避免闭合外部的模板字符串 -->
 </body>
 </html>
